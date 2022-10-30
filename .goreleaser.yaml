@@ -10,8 +10,8 @@ builds:
   -
     ldflags:
       - -s -w
-      - -X {{.GitURL}}/cmd.Version={{.Version}} 
-      - -X {{.GitURL}}/cmd.GitCommit={{.ShortCommit}}
+      - -X github.com/hacker65536/gen-aws-extend-switch-roles-config/cmd.Version={{.Version}} 
+      - -X github.com/hacker65536/gen-aws-extend-switch-roles-config/cmd.GitCommit={{.ShortCommit}}
     env:
       - CGO_ENABLED=0
     goos:
