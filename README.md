@@ -1,0 +1,1 @@
+# gen-aws-extend-switch-roles-config
