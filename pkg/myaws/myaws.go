@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"strings"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
@@ -31,11 +32,29 @@ func GetAccountsList() {
 func GenConfig() {
 	c := utils.NewMyColors()
 	r := listAccounts()
+	mngacc := getRoot()
 	for _, v := range r {
 		if v.Status == "ACTIVE" {
-			fmt.Printf("[%s]\nrole_arn = arn:aws:iam::%s:role/OrganizationAccountAccessRole\ncolor = %s\nregion = %s\n", aws.ToString(v.Name), aws.ToString(v.Id), c.GetRandomColorUniq(), region)
+			if aws.ToString(v.Id) != mngacc {
+				fmt.Printf("[%s]\nrole_arn = arn:aws:iam::%s:role/OrganizationAccountAccessRole\ncolor = %s\nregion = %s\n", aws.ToString(v.Name), aws.ToString(v.Id), c.GetRandomColorUniq(), region)
+			}
 		}
 	}
+}
+
+func getRoot() string {
+	cfg, err := config.LoadDefaultConfig(context.TODO())
+	if err != nil {
+		log.Fatalf("unable to load SDK config, %v", err)
+	}
+
+	svc := organizations.NewFromConfig(cfg)
+	input := &organizations.ListRootsInput{}
+	o, err := svc.ListRoots(context.Background(), input)
+	if err != nil {
+		log.Fatalf("unable to load SDK config, %v", err)
+	}
+	return strings.Split(aws.ToString(o.Roots[0].Arn), ":")[4]
 }
 
 func listAccounts() []types.Account {

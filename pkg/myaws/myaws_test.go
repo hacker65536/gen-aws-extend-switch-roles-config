@@ -11,3 +11,8 @@ func TestGetAccounts(t *testing.T) {
 func TestGenConfig(t *testing.T) {
 	GenConfig()
 }
+
+
+func TestGetRoot(t *testing.T) {
+	getRoot()
+}
