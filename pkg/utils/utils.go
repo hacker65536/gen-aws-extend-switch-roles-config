@@ -1,6 +1,12 @@
 package utils
 
-import "math/rand"
+import (
+	"bufio"
+	"fmt"
+	"math/rand"
+	"os"
+	"strings"
+)
 
 var (
 	colors = []string{
@@ -79,4 +85,17 @@ func (c *MyColors) GetRandomColorUniq() string {
 	color := c.list[i]
 	c.list = append(c.list[:i], c.list[i+1:]...)
 	return color
+}
+
+func StringPrompt(label string) string {
+	var s string
+	r := bufio.NewReader(os.Stdin)
+	for {
+		fmt.Fprint(os.Stderr, label+" ")
+		s, _ = r.ReadString('\n')
+		if s != "" {
+			break
+		}
+	}
+	return strings.TrimSpace(s)
 }
