@@ -90,14 +90,11 @@ func listAccounts() []types.Account {
 
 func GenSSOConfig(session, role string) {
 	r := listAccounts()
-	mngacc := getRoot()
 	for _, v := range r {
 		if v.Status == "ACTIVE" {
-			if aws.ToString(v.Id) != mngacc {
-				fmt.Printf("[profile awssso-%s]\nso_session = %s\nsso_account_id = %s\nsso_role_name = %s\nregion = %s\n",
-					aws.ToString(v.Name), session, aws.ToString(v.Id), role, region,
-				)
-			}
+			fmt.Printf("[profile awssso-%s]\nso_session = %s\nsso_account_id = %s\nsso_role_name = %s\nregion = %s\n",
+				aws.ToString(v.Name), session, aws.ToString(v.Id), role, region,
+			)
 		}
 	}
 }
