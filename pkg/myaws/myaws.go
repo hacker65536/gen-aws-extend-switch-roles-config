@@ -94,7 +94,7 @@ func GenSSOConfig(session, role string) {
 	for _, v := range r {
 		if v.Status == "ACTIVE" {
 			if aws.ToString(v.Id) != mngacc {
-				fmt.Printf("[profile %s]\nso_session = %s\nsso_account_id = %s\nsso_role_name = %s\nregion = %s\n",
+				fmt.Printf("[profile awssso-%s]\nso_session = %s\nsso_account_id = %s\nsso_role_name = %s\nregion = %s\n",
 					aws.ToString(v.Name), session, aws.ToString(v.Id), role, region,
 				)
 			}
