@@ -10,6 +10,10 @@ It is intended in [this way](https://docs.aws.amazon.com/organizations/latest/us
 gen-aws-extend-switch-roles-config gen
 ```
 
+for sso
+```
+gen-aws-extend-switch-roles-config gensso
+```
 
 ## notice
 
