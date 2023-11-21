@@ -41,6 +41,8 @@ to quickly create a Cobra application.`,
 		}
 		fmt.Println("RoleName: ", inputRoleName)
 
+		fmt.Println()
+
 		myaws.GenSSOConfig(inputProfilePrefix, inputSessionName, inputRoleName)
 
 	},
