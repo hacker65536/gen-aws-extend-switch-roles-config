@@ -23,11 +23,16 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
+		inputProfilePrefix := utils.StringPrompt("Input Profile prefix [default awsso]: ")
+		if inputProfilePrefix == "" {
+			inputProfilePrefix = "awsso"
+		}
+		fmt.Println("ProfilePrefix: ", inputProfilePrefix)
+
 		inputSessionName := utils.StringPrompt("Input Session Name [default awsso]: ")
 		if inputSessionName == "" {
 			inputSessionName = "awsso"
 		}
-
 		fmt.Println("SessionName: ", inputSessionName)
 
 		inputRoleName := utils.StringPrompt("Input Role Name [default AWSAdministratorAccess]: ")
@@ -35,7 +40,8 @@ to quickly create a Cobra application.`,
 			inputRoleName = "AWSAdministratorAccess"
 		}
 		fmt.Println("RoleName: ", inputRoleName)
-		myaws.GenSSOConfig(inputSessionName, inputRoleName)
+
+		myaws.GenSSOConfig(inputProfilePrefix, inputSessionName, inputRoleName)
 
 	},
 }

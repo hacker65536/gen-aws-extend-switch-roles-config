@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"regexp"
 	"strings"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -88,12 +89,19 @@ func listAccounts() []types.Account {
 
 }
 
-func GenSSOConfig(session, role string) {
+func GenSSOConfig(prefix, session, role string) {
 	r := listAccounts()
 	for _, v := range r {
 		if v.Status == "ACTIVE" {
-			fmt.Printf("[profile awssso-%s-%s]\nsso_session = %s\nsso_account_id = %s\nsso_role_name = %s\nregion = %s\ncli_pager =\n",
-				aws.ToString(v.Name), aws.ToString(v.Id), session, aws.ToString(v.Id), role, region,
+			reg := regexp.MustCompile(`\s+`)
+			/*
+				if reg.MatchString(aws.ToString(v.Name)) {
+					fmt.Println("Account Name has space, please check ", aws.ToString(v.Name))
+				}
+			*/
+			accName := reg.ReplaceAllString(aws.ToString(v.Name), "-")
+			fmt.Printf("[profile %s-%s-%s]\nsso_session = %s\nsso_account_id = %s\nsso_role_name = %s\nregion = %s\ncli_pager =\n",
+				prefix, accName, aws.ToString(v.Id), session, aws.ToString(v.Id), role, region,
 			)
 		}
 	}

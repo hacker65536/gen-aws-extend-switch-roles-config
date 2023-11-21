@@ -12,7 +12,10 @@ func TestGenConfig(t *testing.T) {
 	GenConfig()
 }
 
-
 func TestGetRoot(t *testing.T) {
 	getRoot()
+}
+
+func TestGenSSOConfig(t *testing.T) {
+	GenSSOConfig("awsso", "awsso", "AWSAdministratorAccess")
 }
